@@ -33,11 +33,21 @@ export class TodoList {
         this.guardarLocalStorage();
     }
 
+    
+    contarTodos(){
+        let contador = 0;
+        for(const todo of this.todos ){
+            if(!todo.completado){
+                contador++;
+            }
+        }
+        return contador;
+    }
+
     guardarLocalStorage(){
 
         localStorage.setItem('todo', JSON.stringify(this.todos));
-        console.log(this.todos)
-
+        document.querySelector('strong').innerText = this.contarTodos();
     }
 
     cargarLocalStorage(){
@@ -48,7 +58,7 @@ export class TodoList {
 
         this.todos = this.todos.map(Todo.fromJson);
 
-        console.log(this.todos);
+        document.querySelector('strong').innerText = this.contarTodos();
     }
 
 }
