@@ -26,7 +26,38 @@ const obtenerUsuarios = async() => {
     return usuarios;
 }
 
+// Cloudinary
+const cloudPreset = 'tgvvl6tx';
+const cloudUrl = '	https://api.cloudinary.com/v1_1/dkghr07an/upload';
+
+// ArchivoSubir :: File
+const subirImagen = async(archivoSubir) => {
+
+    const formData = new FormData();
+    formData.append('upload_preset', cloudPreset);
+    formData.append('file', archivoSubir);
+
+    try {
+        const resp = await fetch(cloudUrl, {
+            method: 'POST',
+            body: formData
+        });
+
+        if (resp.ok) {
+            const cloudResp = await resp.json();
+            return cloudResp.secure_url;
+
+        } else {
+            throw await resp.json();
+        }
+    } catch (err) {
+        throw err;
+    }
+
+}
+
 export {
     obtenerChiste,
-    obtenerUsuarios
+    obtenerUsuarios,
+    subirImagen
 }
